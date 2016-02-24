@@ -23,7 +23,7 @@ def request_alarm():
 # Get actual move speed and rotational speed of robot in SI units
 # Reports calculated speed x from motor encoders and robot rotation based on either encoders of gyro depending on gyrobased being true
 def get_movesteer(gyrobased):
-    rbha.get_movesteer(gyrobased)
+    return rbha.get_movesteer(gyrobased)
 
 # Move command. Input in SI units. speed in m/s dir in radians per sec
 def do_movesteer(speed, rot_z):
