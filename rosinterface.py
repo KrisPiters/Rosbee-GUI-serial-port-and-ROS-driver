@@ -29,3 +29,21 @@ def get_movesteer(gyrobased):
 def do_movesteer(speed, rot_z):
     rbha.do_movesteer(speed, rot_z)
 
+# Opens serial port, initializes hardware abstraction and executes run once commands
+def init_robot():
+    rbha.open_serial()
+
+# Stop robot communication
+def close_robot():
+    rbha.close_serial()
+
+# Call this routine from the ROS spin loop to uodate the data from Rosbee to ROS
+def get_update_from_rosbee():
+    if rbha.isportopen():  # request data from embedded controller at regular intervals
+            rbha.send(rbha.cmd_get_adc)  # get adc values
+            rbha.send(rbha.cmd_get_status)  # get status and errors
+            rbha.send(rbha.cmd_get_counters)  # get process counters
+            rbha.send(rbha.cmd_get_times)  # get process times
+            rbha.send(rbha.cmd_get_position)  # get wheel encoder positions
+            rbha.send(rbha.cmd_get_gyro)  # get gyro data
+            rbha.sendnewsetpoints()  # send new setpoints to wheels if port open
